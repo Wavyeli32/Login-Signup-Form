@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Spartan's Future</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            text-align: center;
+            padding: 10px;
+            background-color: #00c244;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            flex: 1;
+        }
+
+        .content h2 {
+            color: #003366;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .btn-donate {
+            background-color: #00c244;
+            cursor: pointer;
+        }
+
+        .btn-donate:hover {
+            background-color: #008f36;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-body input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .student-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .student-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .student-list li:hover {
+            background: #00c244;
+            color: white;
+        }
+
+        .close-btn {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .close-btn button {
+            background: #003366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .close-btn button:hover {
+            background: #002244;
+        }
+
+        .image-slider {
+            width: 100%;
+            overflow: hidden;
+            background-color: #e9ecef;
+            padding: 10px 0;
+        }
+
+        .slider-track {
+            display: flex;
+            width: calc(200px * 16); /* Adjust based on number of images */
+            animation: slide 20s linear infinite;
+        }
+
+        .slider-track img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            margin: 0 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #003366;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>A Spartan's Future</h1>
+        <p>Empowering NSU students through secure fundraising and mentorship</p>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+    </nav>
+    <div class="content">
+        <h2>Welcome to A Spartan's Future</h2>
+        <p>
+            This initiative is designed to empower NSU students with secure fundraising opportunities 
+            while fostering connections with alumni through mentorship and gamified career fairs.
+        </p>
+        <div class="btn btn-donate" onclick="openDonationModal()">Donate</div>
+        <a href="mentorship.html" class="btn btn-mentorship">Mentorship Portal</a>
+    </div>
+
+    <!-- Image Slider -->
+    <div class="image-slider">
+        <div class="slider-track">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+1" alt="Image 1">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+2" alt="Image 2">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+3" alt="Image 3">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+4" alt="Image 4">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+5" alt="Image 5">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+6" alt="Image 6">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+7" alt="Image 7">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+8" alt="Image 8">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+1" alt="Image 1">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+2" alt="Image 2">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+3" alt="Image 3">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+4" alt="Image 4">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+5" alt="Image 5">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+6" alt="Image 6">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+7" alt="Image 7">
+            <img src="https://via.placeholder.com/200x150.png?text=Image+8" alt="Image 8">
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div class="modal" id="donationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Donate to a Student</h2>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="studentSearch" placeholder="Search for a student by name" oninput="filterStudents()">
+                <ul class="student-list" id="studentList">
+                    <li onclick="donateToStudent('John Doe')">John Doe</li>
+                    <li onclick="donateToStudent('Jane Smith')">Jane Smith</li>
+                    <li onclick="donateToStudent('Michael Lee')">Michael Lee</li>
+                    <li onclick="donateToStudent('Sara Connor')">Sara Connor</li>
+                </ul>
+            </div>
+            <div class="close-btn">
+                <button onclick="closeDonationModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 A Spartan's Future | Norfolk State University</p>
+    </footer>
+</body>
+</html>

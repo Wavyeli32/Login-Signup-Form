@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('tower.jpg');
+            background-size: 110%;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 0;
+            background-color: black;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 100px;
+        }
+
+        #logo {
+            width: 100px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .centered-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-top: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        button {
+            background-color: #28B463;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #239B56;
+        }
+
+        .guest-button {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .guest-button:hover {
+            background-color: #003d80;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img id="logo" src="nor.jpg" alt="Logo">
+        <h1 class="centered-text">A Spartan's Future</h1>
+    </header>
+
+    <form id="loginForm" onsubmit="login(event)">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <div class="button-group">
+            <button type="submit">Login</button>
+            <button type="button" onclick="redirectToRegistration()">Register</button>
+            <button type="button" onclick="forgotPassword()">Forgot Password</button>
+            <button type="button" class="guest-button" onclick="continueAsGuest()">Continue as Guest</button>
+        </div>
+    </form>
