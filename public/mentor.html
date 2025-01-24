@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 0.8rem;
+            background: #f9f9f9;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.7rem;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .student-list {
+            margin-top: 2rem;
+        }
+
+        .student-list h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .student-list ul {
+            padding: 0;
+        }
+
+        .student-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-list button {
+            background-color: #2196F3;
+            margin-left: 1rem;
+        }
+
+        .student-list button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mentor Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <p>Welcome, <span id="mentorName">Mentor</span>! Here are your current tasks and students:</p>
+
+        <h2>Tasks</h2>
+        <ul id="taskList">
+            <li>Review student goals <button onclick="completeTask(this)">Complete</button></li>
+            <li>Prepare for next session with John Doe <button onclick="completeTask(this)">Complete</button></li>
+            <li>Respond to new mentorship requests <button onclick="completeTask(this)">Complete</button></li>
+        </ul>
+
+        <h2>Students</h2>
+        <ul id="studentList">
+            <li>John Doe - Goal: Improve coding skills</li>
+            <li>Jane Smith - Goal: Enhance public speaking</li>
+        </ul>
+
+        <button onclick="alert('Starting mentorship session...')">Start a Session</button>
+
+        <div class="student-list">
+            <h2>New Student Sign-ups</h2>
+            <ul id="newStudents">
+                <li>Michael Lee - Goal: Learn JavaScript <button onclick="addStudent('Michael Lee')">Add</button></li>
+                <li>Sara Connor - Goal: Improve public speaking <button onclick="addStudent('Sara Connor')">Add</button></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

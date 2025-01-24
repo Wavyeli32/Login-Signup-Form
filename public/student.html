@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 0.8rem;
+            background: #f9f9f9;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.7rem;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <p>Welcome, <span id="studentName">Student</span>! Here's your mentorship progress:</p>
+
+        <h2>Your Mentor</h2>
+        <ul>
+            <li id="mentorName">Name: Alex Mentor</li>
+            <li id="mentorExpertise">Expertise: Web Development, Career Growth</li>
+        </ul>
+
+        <h2>Upcoming Sessions</h2>
+        <ul id="sessionsList">
+            <li>Session 1: Tuesday at 3 PM</li>
+            <li>Session 2: Thursday at 5 PM</li>
+        </ul>
+
+        <h2>Goals</h2>
+        <ul id="goalsList">
+            <li>Improve coding skills</li>
+            <li>Prepare for job interviews</li>
+        </ul>
+
+        <button onclick="joinSession()">Join Session</button>
+    </div>
+</body>
+</html>
+

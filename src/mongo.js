@@ -1,24 +1,44 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/LoginFormPractice")
-.then(()=>{
-    console.log('mongoose connected');
+// MongoDB Atlas connection string
+mongoose.connect("mongodb+srv://wavyeli32:github@cluster0.j00mf.mongodb.net/", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 })
-.catch((e)=>{
-    console.log('failed');
-})
+    .then(() => {
+        console.log("MongoDB Atlas connected");
+    })
+    .catch((e) => {
+        console.error("MongoDB connection failed:", e.message);
+    });
 
-const logInSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+// Define Schema
+const logInSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
     },
-    password:{
-        type:String,
-        required:true
-    }
-})
+    email: {
+        type: String,
+        required: true,
+        unique: true, // Ensures no duplicate email addresses
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    role: {
+        type: String,
+        required: true,
+        enum: ["student", "mentor"], // Only allow 'student' or 'mentor'
+    },
+    interests: {
+        type: String,
+        default: "", // Optional field for user interests
+    },
+}, { timestamps: true });
 
-const LogInCollection=new mongoose.model('LogInCollection',logInSchema)
+// Create Model
+const LogInCollection = mongoose.model("LogInCollection", logInSchema);
 
-module.exports=LogInCollection
+module.exports = LogInCollection;
