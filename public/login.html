@@ -21,7 +21,7 @@
 
         header {
             text-align: center;
-            padding: 100px 0;
+            padding: 20px 0;
             background-color: black;
             color: white;
             width: 100%;
@@ -53,7 +53,7 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
-            margin-top: 120px;
+            margin-top: 150px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -62,6 +62,7 @@
         label {
             display: block;
             margin-bottom: 8px;
+            font-weight: bold;
         }
 
         input {
@@ -110,7 +111,7 @@
         <h1 class="centered-text">A Spartan's Future</h1>
     </header>
 
-    <form id="loginForm" onsubmit="login(event)">
+    <form id="loginForm" onsubmit="handleLogin(event)">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
 
@@ -124,3 +125,74 @@
             <button type="button" class="guest-button" onclick="continueAsGuest()">Continue as Guest</button>
         </div>
     </form>
+
+    <script>
+ 
+ async function handleLogin(event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    // Get form data
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Validate fields
+    if (!username || !password) {
+        alert('Both fields are required.');
+        return;
+    }
+
+    // Prepare data to send
+    const loginData = { name: username, password };
+
+    try {
+        // Send POST request to the backend login API
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginData),
+        });
+
+        // Handle the response
+        const responseData = await response.json();
+        if (response.ok) {
+            alert(responseData.message); // Success message
+
+            // Redirect based on role
+            if (responseData.role === 'student') {
+                window.location.href = '/student.html'; // Redirect to student dashboard
+            } else if (responseData.role === 'mentor') {
+                window.location.href = '/mentor.html'; // Redirect to mentor dashboard
+            } else {
+                alert('Unknown user role. Please contact support.');
+            }
+        } else {
+            alert(`Error: ${responseData.message}`); // Show error message
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        alert('An error occurred. Please try again.');
+    }
+}
+
+
+    // Redirect to registration page
+    function redirectToRegistration() {
+        window.location.href = 'signup.html'; // Replace with your registration page URL
+    }
+
+    // Handle forgotten password
+    function forgotPassword() {
+        alert('Forgot password functionality is under development.');
+    }
+
+    // Continue as guest
+    function continueAsGuest() {
+        window.location.href = 'home.html'; // Replace with your guest home page URL
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+<body>
+    <header>
+        <img id="logo" src="nor.jpg" alt="Logo">
+        <h1>Welcome to Our Mentorship Platform</h1>
+    </header>
+    
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form id="signUpForm" onsubmit="handleSignUp(event)">
+            <label for="role">I want to sign up as:</label>
+            <select id="role" name="role" required>
+                <option value="">-- Select --</option>
+                <option value="student">Student</option>
+                <option value="mentor">Mentor</option>
+            </select>
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Choose a username" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="interests">Interests and Goals:</label>
+            <input type="text" id="interests" name="interests" placeholder="E.g., Career growth, coding, public speaking">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <div class="info">
+        <h2>How It Works</h2>
+        <span>1. Sign up as a student or mentor</span>
+        <span>2. Match with mentors/alumni based on interests and goals</span>
+        <span>3. Engage in one-on-one mentorship sessions</span>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            background-image: url('tower.jpg');
+            background-size: 110%;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #45a049;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            padding: 0.7rem;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .info {
+            text-align: center;
+            margin-top: 2rem;
+            color: #555;
+        }
+        
+        #logo {
+            width: 100px;
+        }
+
+        .info span {
+            display: block;
+            margin-top: 0.5rem;
+        }
+    </style>
+
+<script>
+  async function handleSignUp(event) {
+    event.preventDefault();
+
+    const role = document.getElementById('role').value;
+    const name = document.getElementById('name').value;
+    const username = document.getElementById('username').value; // Capture the username
+    const email = document.getElementById('email').value;
+    const interests = document.getElementById('interests').value;
+    const password = document.getElementById('password').value;
+
+    if (!role || !name || !username || !email || !password) {
+        alert('All fields are required.');
+        return;
+    }
+
+    const signUpData = { role, name, username, email, password, interests };
+
+    try {
+        const response = await fetch('/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(signUpData),
+        });
+
+        const responseData = await response.json();
+        if (response.ok) {
+            alert(responseData.message);
+            window.location.href = '/login.html';
+        } else {
+            alert(`Error: ${responseData.message}`);
+        }
+    } catch (error) {
+        console.error('Sign-up error:', error);
+        alert('An error occurred. Please try again.');
+    }
+}
+</script>
+
+</body>
