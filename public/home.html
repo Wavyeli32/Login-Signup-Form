@@ -195,7 +195,7 @@
         <p>Empowering NSU students through secure fundraising and mentorship</p>
     </header>
     <nav>
-        <a href="index.html">Home</a>
+        <a href="home.html">Home</a>
         <a href="about.html">About</a>
     </nav>
     <div class="content">
@@ -250,7 +250,82 @@
             </div>
         </div>
     </div>
+<script>
+ // Open donation modal and fetch students from backend
+function openDonationModal() {
+    document.getElementById("donationModal").style.display = "flex";
+    fetchStudentData(); // Call function to get student info
+}
 
+// Close donation modal
+function closeDonationModal() {
+    document.getElementById("donationModal").style.display = "none";
+}
+
+// Fetch student data from backend API
+async function fetchStudentData() {
+    try {
+        let response = await fetch("https://your-backend-url.com/api/students"); // Replace with actual API
+        let students = await response.json();
+
+        let studentList = document.getElementById("studentList");
+        studentList.innerHTML = ""; // Clear previous list
+
+        students.forEach(student => {
+            let li = document.createElement("li");
+            li.textContent = student.name; // Assuming 'name' is a key in the student object
+            li.onclick = () => donateToStudent(student.id, student.name); // Use student ID if needed
+            studentList.appendChild(li);
+        });
+
+    } catch (error) {
+        console.error("Error fetching student data:", error);
+    }
+}
+
+// Filter students based on input
+function filterStudents() {
+    let input = document.getElementById("studentSearch").value.toLowerCase();
+    let students = document.querySelectorAll(".student-list li");
+
+    students.forEach(student => {
+        let name = student.textContent.toLowerCase();
+        student.style.display = name.includes(input) ? "block" : "none";
+    });
+}
+
+// Simulated donation function (Modify to send donation to backend)
+function donateToStudent(studentId, studentName) {
+    alert(`You have selected ${studentName} for your donation.`);
+
+    // Example: Redirect to donation page or send data to backend
+    let donationLink = `https://yourpaymentgateway.com/donate?studentId=${studentId}`;
+    window.location.href = donationLink;
+
+    // Alternative: Send donation info to backend (POST request)
+    /*
+    fetch("https://your-backend-url.com/api/donate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ studentId: studentId, amount: "50" }) // Example amount
+    })
+    .then(response => response.json())
+    .then(data => console.log("Donation success:", data))
+    .catch(error => console.error("Donation error:", error));
+    */
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    let modal = document.getElementById("donationModal");
+    if (event.target === modal) {
+        closeDonationModal();
+    }
+};
+
+</script>
     <footer>
         <p>&copy; 2024 A Spartan's Future | Norfolk State University</p>
     </footer>

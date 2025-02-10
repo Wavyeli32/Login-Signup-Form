@@ -90,67 +90,56 @@
         <button onclick="joinSession()">Join Session</button>
     </div>
     <script>
-    // Simulate fetching student data from the backend
-    async function fetchStudentData() {
-        try {
-            // Replace '/api/student/dashboard' with your actual backend endpoint
-            const response = await fetch('/api/student/dashboard', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+    document.addEventListener("DOMContentLoaded", function () {
+    // Simulated student data (Replace with actual API calls if needed)
+    const studentData = {
+        name: "Elijah Everett",
+        mentor: {
+            name: "Alex Mentor",
+            expertise: "Web Development, Career Growth"
+        },
+        sessions: [
+            "Session 1: Tuesday at 3 PM",
+            "Session 2: Thursday at 5 PM"
+        ],
+        goals: [
+            "Improve coding skills",
+            "Prepare for job interviews"
+        ]
+    };
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch student data');
-            }
+    // Update student name
+    document.getElementById("studentName").textContent = studentData.name;
 
-            const data = await response.json();
+    // Update mentor info
+    document.getElementById("mentorName").textContent = `Name: ${studentData.mentor.name}`;
+    document.getElementById("mentorExpertise").textContent = `Expertise: ${studentData.mentor.expertise}`;
 
-            // Populate the dashboard with the fetched data
-            populateDashboard(data);
-        } catch (error) {
-            console.error('Error fetching student data:', error);
-            alert('Failed to load dashboard. Please try again.');
-        }
-    }
+    // Populate sessions list dynamically
+    const sessionsList = document.getElementById("sessionsList");
+    sessionsList.innerHTML = "";
+    studentData.sessions.forEach(session => {
+        const li = document.createElement("li");
+        li.textContent = session;
+        sessionsList.appendChild(li);
+    });
 
-    // Populate dashboard with fetched data
-    function populateDashboard(data) {
-        // Update student name
-        document.getElementById('studentName').textContent = data.studentName;
+    // Populate goals list dynamically
+    const goalsList = document.getElementById("goalsList");
+    goalsList.innerHTML = "";
+    studentData.goals.forEach(goal => {
+        const li = document.createElement("li");
+        li.textContent = goal;
+        goalsList.appendChild(li);
+    });
+});
 
-        // Update mentor info
-        document.getElementById('mentorName').textContent = `Name: ${data.mentor.name}`;
-        document.getElementById('mentorExpertise').textContent = `Expertise: ${data.mentor.expertise.join(', ')}`;
+// Function to handle joining a session
+function joinSession() {
+    alert("Redirecting to your mentorship session...");
+    window.location.href = "https://example.com/mentorship-session"; // Replace with actual session link
+}
 
-        // Update upcoming sessions
-        const sessionsList = document.getElementById('sessionsList');
-        sessionsList.innerHTML = ''; // Clear existing list
-        data.sessions.forEach((session) => {
-            const li = document.createElement('li');
-            li.textContent = `${session.title}: ${session.date} at ${session.time}`;
-            sessionsList.appendChild(li);
-        });
-
-        // Update goals
-        const goalsList = document.getElementById('goalsList');
-        goalsList.innerHTML = ''; // Clear existing list
-        data.goals.forEach((goal) => {
-            const li = document.createElement('li');
-            li.textContent = goal;
-            goalsList.appendChild(li);
-        });
-    }
-
-    // Handle "Join Session" button click
-    function joinSession() {
-        alert('Joining session...'); // Placeholder action
-        // Implement real functionality here (e.g., redirect to video call or session page)
-    }
-
-    // Fetch and display student data when the page loads
-    window.onload = fetchStudentData;
 </script>
 
 </body>

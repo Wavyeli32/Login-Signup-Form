@@ -22,7 +22,7 @@
         header {
             text-align: center;
             padding: 20px 0;
-            background-color: black;
+            background-color: #54585A;
             color: white;
             width: 100%;
             position: fixed;
@@ -48,7 +48,7 @@
         }
 
         form {
-            background-color: #fff;
+            background-color: #F3D03E;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -79,7 +79,7 @@
         }
 
         button {
-            background-color: #28B463;
+            background-color: #007A53;
             color: black;
             padding: 10px;
             border: none;
@@ -129,54 +129,44 @@
     <script>
  
  async function handleLogin(event) {
-    event.preventDefault(); // Prevent form from refreshing the page
+    event.preventDefault(); // Prevent form refresh
 
-    // Get form data
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    // Fetch username and password correctly
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    // Validate fields
+    console.log("Username (input):", username);
+    console.log("Password (input):", password);
+
     if (!username || !password) {
-        alert('Both fields are required.');
+        alert('Both username and password are required.');
         return;
     }
 
-    // Prepare data to send
-    const loginData = { name: username, password };
+    // **Ensure password is correctly sent**
+    const loginData = { username, password };
 
     try {
-        // Send POST request to the backend login API
         const response = await fetch('/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
         });
 
-        // Handle the response
         const responseData = await response.json();
-        if (response.ok) {
-            alert(responseData.message); // Success message
+        console.log("Server Response:", responseData);
 
-            // Redirect based on role
-            if (responseData.role === 'student') {
-                window.location.href = '/student.html'; // Redirect to student dashboard
-            } else if (responseData.role === 'mentor') {
-                window.location.href = '/mentor.html'; // Redirect to mentor dashboard
-            } else {
-                alert('Unknown user role. Please contact support.');
-            }
+        if (response.ok) {
+            alert(responseData.message);
+            window.location.href = '/student.html'; // Redirect after login
         } else {
-            alert(`Error: ${responseData.message}`); // Show error message
+            alert(`Error: ${responseData.message}`);
         }
     } catch (error) {
-        console.error('Login error:', error);
-        alert('An error occurred. Please try again.');
+        console.error("Login error:", error);
+        alert("An error occurred. Please try again.");
     }
 }
-
-
     // Redirect to registration page
     function redirectToRegistration() {
         window.location.href = 'signup.html'; // Replace with your registration page URL

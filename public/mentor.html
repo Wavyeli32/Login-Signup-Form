@@ -43,11 +43,14 @@
             margin: 0.5rem 0;
             border: 1px solid #ddd;
             border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         button {
-            margin-top: 1rem;
-            padding: 0.7rem;
+            margin-left: 1rem;
+            padding: 0.5rem;
             font-size: 1rem;
             background-color: #4CAF50;
             color: white;
@@ -60,27 +63,8 @@
             background-color: #45a049;
         }
 
-        .student-list {
-            margin-top: 2rem;
-        }
-
-        .student-list h2 {
-            margin-bottom: 0.5rem;
-        }
-
-        .student-list ul {
-            padding: 0;
-        }
-
-        .student-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .student-list button {
             background-color: #2196F3;
-            margin-left: 1rem;
         }
 
         .student-list button:hover {
@@ -94,30 +78,68 @@
     </header>
 
     <div class="container">
-        <p>Welcome, <span id="mentorName">Mentor</span>! Here are your current tasks and students:</p>
+        <p>Welcome, <span id="mentorName">Loading...</span>! Here are your tasks and students:</p>
 
         <h2>Tasks</h2>
         <ul id="taskList">
-            <li>Review student goals <button onclick="completeTask(this)">Complete</button></li>
-            <li>Prepare for next session with John Doe <button onclick="completeTask(this)">Complete</button></li>
-            <li>Respond to new mentorship requests <button onclick="completeTask(this)">Complete</button></li>
+            <li>Loading tasks...</li>
         </ul>
 
         <h2>Students</h2>
         <ul id="studentList">
-            <li>John Doe - Goal: Improve coding skills</li>
-            <li>Jane Smith - Goal: Enhance public speaking</li>
+            <li>Loading students...</li>
         </ul>
 
-        <button onclick="alert('Starting mentorship session...')">Start a Session</button>
+        <button onclick="startSession()">Start a Session</button>
 
         <div class="student-list">
-            <h2>New Student Sign-ups</h2>
+            <h2>New Student Requests</h2>
             <ul id="newStudents">
-                <li>Michael Lee - Goal: Learn JavaScript <button onclick="addStudent('Michael Lee')">Add</button></li>
-                <li>Sara Connor - Goal: Improve public speaking <button onclick="addStudent('Sara Connor')">Add</button></li>
+                <li>Loading...</li>
             </ul>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("/mentor-dashboard")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("mentorName").textContent = data.mentorName;
+
+                    const taskList = document.getElementById("taskList");
+                    taskList.innerHTML = "";
+                    data.tasks.forEach(task => {
+                        taskList.innerHTML += `<li>${task} <button onclick="completeTask(this)">Complete</button></li>`;
+                    });
+
+                    const studentList = document.getElementById("studentList");
+                    studentList.innerHTML = "";
+                    data.students.forEach(student => {
+                        studentList.innerHTML += `<li>${student.name} - Goal: ${student.goal}</li>`;
+                    });
+
+                    const newStudents = document.getElementById("newStudents");
+                    newStudents.innerHTML = "";
+                    data.newStudentRequests.forEach(student => {
+                        newStudents.innerHTML += `<li>${student.name} - Goal: ${student.goal} <button onclick="addStudent('${student.name}')">Add</button></li>`;
+                    });
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
+
+        function completeTask(button) {
+            button.parentElement.remove();
+            alert("Task completed!");
+        }
+
+        function startSession() {
+            alert("Starting mentorship session...");
+        }
+
+        function addStudent(name) {
+            alert(`${name} added to your students.`);
+        }
+    </script>
 </body>
 </html>

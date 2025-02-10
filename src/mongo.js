@@ -47,21 +47,10 @@ const logInSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-// Add a pre-save hook for password hashing
-logInSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
-
-    const bcrypt = require("bcrypt");
-    try {
-        this.password = await bcrypt.hash(this.password, 10); // Hash the password before saving
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
+// ❌ Remove the pre-save password hashing hook
+// This ensures passwords are stored in plain text (Not Recommended for Security)
 
 // Create Model
 const LogInCollection = mongoose.model("LogInCollection", logInSchema);
 
 module.exports = LogInCollection;
-
