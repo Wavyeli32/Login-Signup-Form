@@ -204,7 +204,10 @@
             This initiative is designed to empower NSU students with secure fundraising opportunities 
             while fostering connections with alumni through mentorship and gamified career fairs.
         </p>
-        <div class="btn btn-donate" onclick="openDonationModal()">Donate</div>
+        
+        <div class="btn btn-donate" onclick="fetchStudents(), openDonationModal() ">Donate</div>
+     
+
         <a href="mentorship.html" class="btn btn-mentorship">Mentorship Portal</a>
     </div>
 
@@ -238,7 +241,7 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="studentSearch" placeholder="Search for a student by name" oninput="filterStudents()">
-                <ul class="student-list" id="studentList">
+                <ul class="student-list" id="students">
                     <li onclick="donateToStudent('John Doe')">John Doe</li>
                     <li onclick="donateToStudent('Jane Smith')">Jane Smith</li>
                     <li onclick="donateToStudent('Michael Lee')">Michael Lee</li>
@@ -263,26 +266,32 @@ function closeDonationModal() {
 }
 
 // Fetch student data from backend API
-async function fetchStudentData() {
+async function fetchStudents() {
     try {
-        let response = await fetch("https://your-backend-url.com/api/students"); // Replace with actual API
-        let students = await response.json();
+        // Use the correct API endpoint
+        const response = await fetch("/students");
+        const students = await response.json();
 
-        let studentList = document.getElementById("studentList");
-        studentList.innerHTML = ""; // Clear previous list
+        const studentList = document.getElementById("students");
+        studentList.innerHTML = ""; // Clear previous entries
 
         students.forEach(student => {
-            let li = document.createElement("li");
-            li.textContent = student.name; // Assuming 'name' is a key in the student object
-            li.onclick = () => donateToStudent(student.id, student.name); // Use student ID if needed
+            const li = document.createElement("li");
+            li.classList.add("student-item");
+
+            li.innerHTML = `
+                ${student.name}
+                <button class="donate-btn" onclick="donate('${student.name}')">Donate</button>
+            `;
+
             studentList.appendChild(li);
         });
 
+        document.getElementById("studentList").style.display = "block";
     } catch (error) {
-        console.error("Error fetching student data:", error);
+        console.error("Error fetching students:", error);
     }
 }
-
 // Filter students based on input
 function filterStudents() {
     let input = document.getElementById("studentSearch").value.toLowerCase();
