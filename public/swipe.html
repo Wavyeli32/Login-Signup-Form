@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .profile-slide {
+            display: none;
+        }
+
+        .profile-slide.active {
+            display: block;
+        }
+
+        .profile-slide img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .profile-info {
+            text-align: left;
+            padding: 10px;
+        }
+
+        .donate-btn {
+            background: #28B463;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .donate-btn:hover {
+            background: #1E8449;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .nav-buttons button {
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-buttons button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Swipe Through Student Profiles</h2>
+
+    <div class="profile-container">
+        <div id="profileSlides"></div>
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">Previous</button>
+            <button onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const students = [
+            { name: "Elijah Everett", bio: "CS student passionate about AI.", image: "https://via.placeholder.com/300x200.png?text=Elijah+Everett" },
+            { name: "Jane Smith", bio: "STEM advocate and mentor.", image: "https://via.placeholder.com/300x200.png?text=Jane+Smith" },
+            { name: "John Doe", bio: "Aspiring engineer and problem solver.", image: "https://via.placeholder.com/300x200.png?text=John+Doe" }
+        ];
+
+        let currentIndex = 0;
+
+        function showProfiles() {
+            const container = document.getElementById("profileSlides");
+            container.innerHTML = "";
+            
+            students.forEach((student, index) => {
+                const slide = document.createElement("div");
+                slide.classList.add("profile-slide");
+                if (index === currentIndex) slide.classList.add("active");
+
+                slide.innerHTML = `
+                    <img src="${student.image}" alt="${student.name}">
+                    <div class="profile-info">
+                        <h3>${student.name}</h3>
+                        <p>${student.bio}</p>
+                        <button class="donate-btn" onclick="donate('${student.name}')">Donate</button>
+                    </div>
+                `;
+
+                container.appendChild(slide);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % students.length;
+            showProfiles();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + students.length) % students.length;
+            showProfiles();
+        }
+
+        function donate(studentName) {
+            alert(`Redirecting to donate for ${studentName}`);
+        }
+
+        document.addEventListener("DOMContentLoaded", showProfiles);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: #00c244;
+        }
+
+        p {
+            font-size: 1.1rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            color: white;
+            background-color: #4CAF50;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #008f36;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img id="studentImage" src="default-avatar.png" alt="Student Image">
+        <h1 id="studentName">Loading...</h1>
+        <p><strong>Cause:</strong> <span id="studentCause">Loading...</span></p>
+        <a href="home.html" class="back-btn">Back to Homepage</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get("id"); // Get user ID from URL
+    
+            // Get elements by ID
+            const userNameElement = document.getElementById("userName");
+            const userRoleElement = document.getElementById("userRole");
+            const userEmailElement = document.getElementById("userEmail");
+            const userImageElement = document.getElementById("userImage");
+    
+            if (!userId) {
+                userNameElement.textContent = "User not found";
+                return;
+            }
+    
+            try {
+                const response = await fetch("students"); // Fetch user data
+    
+                if (!response.ok) {
+                    throw new Error("User not found");
+                }
+    
+                const user = await response.json();
+    
+                // Ensure user data is present before accessing properties
+                userNameElement.textContent = user?.name || "Unknown User";
+                userRoleElement.textContent = `Role: ${user?.role || "N/A"}`;
+                userEmailElement.textContent = `Email: ${user?.email || "No email available"}`;
+                userImageElement.src = user?.profileImage || "default-avatar.png"; // Default image if none available
+    
+            } catch (error) {
+                console.error("❌ Error fetching user data:", error);
+                userNameElement.textContent = "Error loading user profile";
+            }
+        });
+    </script>
+    
+    
+
+</body>
+</html>

@@ -45,14 +45,13 @@ const logInSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    profileImage: {
+        type: String,
+        default: "https://via.placeholder.com/150"
+    }
 }, { timestamps: true });
 
-const studentSchema = new mongoose.Schema({
-    name: String,
-    cause: String
-});
 
-const StudentCollection = mongoose.model("Student", studentSchema);
 const LogInCollection = mongoose.model("LogInCollection", logInSchema);
 
-module.exports = { LogInCollection, StudentCollection };
+module.exports = { LogInCollection};

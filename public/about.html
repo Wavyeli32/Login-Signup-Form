@@ -12,40 +12,102 @@
             background-color: #f4f4f9;
             color: #333;
         }
+
         header {
             background-color: #003366;
             color: white;
             padding: 20px;
             text-align: center;
         }
+
         nav {
             text-align: center;
             padding: 10px;
             background-color: #00c244;
         }
+
         nav a {
             color: white;
             text-decoration: none;
             margin: 0 15px;
             font-size: 16px;
         }
+
         nav a:hover {
             text-decoration: underline;
         }
+
         .content {
             padding: 20px;
             max-width: 800px;
             margin: auto;
         }
+
         .content h2 {
             color: #003366;
         }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: white;
+            background-color: #00c244;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #008f36;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
             background-color: #003366;
             color: white;
         }
+
+        .extra-section {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .extra-section h3 {
+            color: #003366;
+        }
+
+        .extra-section p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 10px;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: #777;
+        }
+
+        .testimonial-card h4 {
+            color: #003366;
+        }
+
     </style>
 </head>
 <body>
@@ -54,7 +116,7 @@
         <p>Learn more about how we empower NSU students.</p>
     </header>
     <nav>
-        <a href="index.html">Home</a>
+        <a href="home.html">Home</a>
         <a href="about.html">About</a>
     </nav>
     <div class="content">
@@ -70,13 +132,38 @@
             <li>Alumni mentorship programs to guide students</li>
             <li>Gamified virtual career fairs to enhance job readiness</li>
         </ul>
+
+        <h2>How It Works</h2>
+        <p>
+            We leverage cutting-edge technology and a strong network of alumni to connect students with the resources they need to succeed. 
+            The process is simple:
+        </p>
+        <ul>
+            <li><strong>Donate:</strong> Individuals and organizations can contribute securely to the platform using blockchain technology.</li>
+            <li><strong>Mentor:</strong> Alumni can sign up to mentor students, offering career advice and networking opportunities.</li>
+            <li><strong>Connect:</strong> Students can participate in career fairs, workshops, and networking events to gain valuable skills and opportunities.</li>
+        </ul>
+
         <h2>Join Us</h2>
         <p>
             Together, we can create a vibrant community that supports academic and professional growth for all Spartans. 
             Your contributions and mentorship make this vision possible!
         </p>
-        <a href="https://cash.app/$YourCashtag" class="btn" style="background-color: #00c244;">Donate Now</a>
+        <a href="https://cash.app/$YourCashtag" class="btn">Donate Now</a>
     </div>
+
+    <!-- Extra Section to fill up space -->
+    <div class="extra-section">
+        <h3>Our Impact</h3>
+        <p>
+            Since launching, "A Spartan's Future" has helped hundreds of students gain access to the funding and mentorship they need. 
+            We are proud of the positive impact we’ve made on the NSU community and are committed to continuing this work. 
+            With your support, we can empower even more students to reach their potential.
+        </p>
+
+        
+    </div>
+
     <footer>
         <p>&copy; 2024 A Spartan's Future | Norfolk State University</p>
     </footer>

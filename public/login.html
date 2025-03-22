@@ -125,64 +125,87 @@
             <button type="button" class="guest-button" onclick="continueAsGuest()">Continue as Guest</button>
         </div>
     </form>
-
-    <script>
- 
- async function handleLogin(event) {
-    event.preventDefault(); // Prevent form refresh
-
-    // Fetch username and password correctly
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    console.log("Username (input):", username);
-    console.log("Password (input):", password);
-
-    if (!username || !password) {
-        alert('Both username and password are required.');
-        return;
-    }
-
-    // **Ensure password is correctly sent**
-    const loginData = { username, password };
-
-    try {
-        const response = await fetch('/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(loginData),
-        });
-
-        const responseData = await response.json();
-        console.log("Server Response:", responseData);
-
-        if (response.ok) {
-            alert(responseData.message);
-            window.location.href = '/student.html'; // Redirect after login
-        } else {
-            alert(`Error: ${responseData.message}`);
+<script>
+    async function handleLogin(event) {
+        event.preventDefault(); // Prevent form refresh
+    
+        // Fetch username and password correctly
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+    
+        console.log("Username (input):", username);
+        console.log("Password (input):", password);
+    
+        if (!username || !password) {
+            alert('Both username and password are required.');
+            return;
         }
-    } catch (error) {
-        console.error("Login error:", error);
-        alert("An error occurred. Please try again.");
+    
+        const loginData = { username, password };
+    
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData),
+            });
+    
+            const responseData = await response.json();
+            console.log("Server Response:", responseData);
+    
+            if (response.ok) {
+                alert(responseData.message);
+    
+                // Check user role from the response
+                if (responseData.role === 'mentor') {
+                    // Redirect mentor to the mentor dashboard
+                    window.location.href = 'mentor.html';
+                } else if (responseData.role === 'student') {
+                    // Redirect student to the student dashboard
+                    window.location.href = `student.html`;
+
+                } else {
+                    alert('Unknown role detected.');
+                }
+            } else {
+                alert(`Error: ${responseData.message}`);
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("An error occurred. Please try again.");
+        }
     }
-}
-    // Redirect to registration page
+    async function forgotPassword() {
+        const email = prompt("Enter your registered email address:");
+        if (!email) {
+            alert("Email is required to reset your password.");
+            return;
+        }
+
+        try {
+            const response = await fetch('/forgot-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+
+            const responseData = await response.json();
+            alert(responseData.message);
+        } catch (error) {
+            console.error("Forgot Password error:", error);
+            alert("An error occurred while processing your request. Please try again.");
+        }
+    }
     function redirectToRegistration() {
-        window.location.href = 'signup.html'; // Replace with your registration page URL
-    }
+    window.location.href = "signup.html"; // Change to the actual registration page URL
+}
 
-    // Handle forgotten password
-    function forgotPassword() {
-        alert('Forgot password functionality is under development.');
-    }
+function continueAsGuest() {
+    window.location.href = "home.html"; // Change to the actual guest homepage URL
+}
 
-    // Continue as guest
-    function continueAsGuest() {
-        window.location.href = 'home.html'; // Replace with your guest home page URL
-    }
+        
 </script>
-
 </body>
 
 </html>

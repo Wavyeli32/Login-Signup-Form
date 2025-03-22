@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const { LogInCollection, StudentCollection } = require("./mongo"); // ✅ Import both models
+const { LogInCollection} = require("./mongo"); 
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -13,17 +13,16 @@ app.use(express.static(publicPath));
 
 
 
-// ✅ API to fetch students from MongoDB
+// API to fetch students from MongoDB
 app.get("/students", async (req, res) => {
     try {
         const studentList = await LogInCollection.find({});
         res.json(studentList);
     } catch (error) {
-        console.error("❌ Error fetching students:", error);
+        console.error(" Error fetching students:", error);
         res.status(500).json({ message: "An error occurred while fetching students." });
     }
 });
-
 
 
 // Routes to serve HTML files
@@ -35,7 +34,32 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(publicPath, 'login.html'));
 });
 
-// ✅ Login API
+// Forgot Password API
+app.post('/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required to reset your password.' });
+        }
+
+        // Check if the email exists in the database
+        const user = await LogInCollection.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'No account found with that email address.' });
+        }
+
+        // Here, you would implement a password reset process, such as sending a reset link to the user's email.
+        // For now, let's simulate that process:
+        console.log(`Password reset link sent to: ${email}`);
+
+        res.status(200).json({ message: 'A password reset link has been sent to your email.' });
+    } catch (error) {
+        console.error('❌ Forgot password error:', error);
+        res.status(500).json({ message: 'An internal server error occurred.' });
+    }
+});
+
+// Login API
 app.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -55,7 +79,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// ✅ Student Dashboard API
+
+// Student Dashboard API
 app.get("/dashboard/:username", async (req, res) => {
     const { username } = req.params;
     try {
@@ -73,12 +98,11 @@ app.get("/dashboard/:username", async (req, res) => {
 
         res.json(dashboardData);
     } catch (error) {
-        console.error("❌ Error fetching student dashboard:", error);
+        console.error(" Error fetching student dashboard:", error);
         res.status(500).json({ message: "An internal server error occurred." });
     }
 });
 
-// ✅ Mentor Dashboard API
 app.get("/mentor-dashboard", async (req, res) => {
     try {
         const mentor = await LogInCollection.findOne({ role: "mentor" });
@@ -101,7 +125,9 @@ app.get("/mentor-dashboard", async (req, res) => {
     }
 });
 
-// ✅ Signup API
+
+
+// Signup API
 app.post('/signup', async (req, res) => {
     try {
         const { role, name, username, email, password, interests } = req.body;
@@ -121,12 +147,12 @@ app.post('/signup', async (req, res) => {
 
         return res.status(201).json({ message: 'User signed up successfully!' });
     } catch (error) {
-        console.error('❌ Sign-up error:', error);
+        console.error('Sign-up error:', error);
         res.status(500).json({ message: 'An internal server error occurred.' });
     }
 });
 
-// ✅ Start the server
+
 app.listen(port, () => {
-    console.log(`🚀 Server running on http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });

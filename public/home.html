@@ -13,6 +13,7 @@
             color: #333;
             display: flex;
             flex-direction: column;
+            text-align: center;
         }
 
         header {
@@ -40,14 +41,23 @@
         }
 
         .content {
-            padding: 20px;
+            padding: 40px 20px;
             max-width: 800px;
             margin: auto;
             flex: 1;
+            text-align: center;
         }
 
         .content h2 {
             color: #28B463;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
         }
 
         .btn {
@@ -60,116 +70,50 @@
             margin-right: 10px;
             color: white;
             background-color: #00c244;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
         }
 
-        .btn-donate {
-            background-color: #00c244;
-            cursor: pointer;
-        }
-        .btn:hover{
+        .btn:hover {
             background-color: #008f36;
-        }
-        .btn-donate:hover {
-            background-color: #008f36;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-body {
-            margin-bottom: 20px;
-        }
-
-        .modal-body input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .student-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .student-list li {
-            margin: 10px 0;
-            padding: 10px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .student-list li:hover {
-            background: #00c244;
-            color: white;
-        }
-
-        .close-btn {
-            text-align: right;
-            margin-top: 10px;
-        }
-
-        .close-btn button {
-            background: #003366;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .close-btn button:hover {
-            background: #002244;
         }
 
         .image-slider {
             width: 100%;
             overflow: hidden;
             background-color: #e9ecef;
-            padding: 10px 0;
+            padding: 20px 0;
+            margin-bottom: 40px;
         }
 
         .slider-track {
-            display: flex;
-            width: calc(200px * 16); /* Adjust based on number of images */
-            animation: slide 20s linear infinite;
-        }
+    display: flex;
+    width: calc(300px * 12);
+    animation: slide 20s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
 
         .slider-track img {
-            width: 200px;
-            height: 150px;
+            width: 300px;
+            height: 200px;
             object-fit: cover;
-            margin: 0 10px;
+            margin: 0 15px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slider-track img:hover {
+            transform: scale(1.05);
         }
 
         @keyframes slide {
@@ -184,9 +128,140 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: black;
+            background-color: #000000;
             color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
+
+        footer a {
+            color: #28B463;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .extra-section {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .extra-section h3 {
+            color: #28B463;
+            margin-bottom: 20px;
+        }
+
+        .extra-section p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .impact-section {
+            background-color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .impact-section h3 {
+            color: #28B463;
+            margin-bottom: 20px;
+        }
+
+        .impact-section p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .impact-section ul {
+            list-style-type: none;
+            padding: 0;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .impact-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .profile-slide {
+            display: none;
+        }
+
+        .profile-slide.active {
+            display: block;
+        }
+
+        .profile-slide img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .profile-info {
+            text-align: left;
+            padding: 10px;
+        }
+
+        .donate-btn {
+            background: #28B463;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .donate-btn:hover {
+            background: #1E8449;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .nav-buttons button {
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-buttons button:hover {
+            background: #0056b3;
+        }
+
     </style>
 </head>
 <body>
@@ -194,10 +269,23 @@
         <h1>A Spartan's Future</h1>
         <p>Empowering NSU students through secure fundraising and mentorship</p>
     </header>
+
     <nav>
         <a href="home.html">Home</a>
         <a href="about.html">About</a>
     </nav>
+
+    <h2>Swipe Through Student Profiles</h2>
+
+    <div class="profile-container">
+        <div id="profileSlides"></div>
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">Previous</button>
+            <button onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+
+
     <div class="content">
         <h2>Welcome to A Spartan's Future</h2>
         <p>
@@ -205,138 +293,72 @@
             while fostering connections with alumni through mentorship and gamified career fairs.
         </p>
         
-        <div class="btn btn-donate" onclick="fetchStudents(), openDonationModal() ">Donate</div>
-     
-
+        <!-- Call-to-Action Buttons -->
+        <div class="btn btn-donate" onclick="window.location.href='donate.html';">Donate</div>
         <a href="mentorship.html" class="btn btn-mentorship">Mentorship Portal</a>
     </div>
 
-    <!-- Image Slider -->
-    <div class="image-slider">
-        <div class="slider-track">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+1" alt="Image 1">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+2" alt="Image 2">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+3" alt="Image 3">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+4" alt="Image 4">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+5" alt="Image 5">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+6" alt="Image 6">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+7" alt="Image 7">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+8" alt="Image 8">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+1" alt="Image 1">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+2" alt="Image 2">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+3" alt="Image 3">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+4" alt="Image 4">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+5" alt="Image 5">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+6" alt="Image 6">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+7" alt="Image 7">
-            <img src="https://via.placeholder.com/200x150.png?text=Image+8" alt="Image 8">
-        </div>
-    </div>
-
-    <!-- Donation Modal -->
-    <div class="modal" id="donationModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Donate to a Student</h2>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="studentSearch" placeholder="Search for a student by name" oninput="filterStudents()">
-                <ul class="student-list" id="students">
-                    <li onclick="donateToStudent('John Doe')">John Doe</li>
-                    <li onclick="donateToStudent('Jane Smith')">Jane Smith</li>
-                    <li onclick="donateToStudent('Michael Lee')">Michael Lee</li>
-                    <li onclick="donateToStudent('Sara Connor')">Sara Connor</li>
-                </ul>
-            </div>
-            <div class="close-btn">
-                <button onclick="closeDonationModal()">Close</button>
-            </div>
-        </div>
-    </div>
-<script>
- // Open donation modal and fetch students from backend
-function openDonationModal() {
-    document.getElementById("donationModal").style.display = "flex";
-    fetchStudentData(); // Call function to get student info
-}
-
-// Close donation modal
-function closeDonationModal() {
-    document.getElementById("donationModal").style.display = "none";
-}
-
-// Fetch student data from backend API
-async function fetchStudents() {
-    try {
-        // Use the correct API endpoint
-        const response = await fetch("/students");
-        const students = await response.json();
-
-        const studentList = document.getElementById("students");
-        studentList.innerHTML = ""; // Clear previous entries
-
-        students.forEach(student => {
-            const li = document.createElement("li");
-            li.classList.add("student-item");
-
-            li.innerHTML = `
-                ${student.name}
-                <button class="donate-btn" onclick="donate('${student.name}')">Donate</button>
-            `;
-
-            studentList.appendChild(li);
-        });
-
-        document.getElementById("studentList").style.display = "block";
-    } catch (error) {
-        console.error("Error fetching students:", error);
-    }
-}
-// Filter students based on input
-function filterStudents() {
-    let input = document.getElementById("studentSearch").value.toLowerCase();
-    let students = document.querySelectorAll(".student-list li");
-
-    students.forEach(student => {
-        let name = student.textContent.toLowerCase();
-        student.style.display = name.includes(input) ? "block" : "none";
-    });
-}
-
-// Simulated donation function (Modify to send donation to backend)
-function donateToStudent(studentId, studentName) {
-    alert(`You have selected ${studentName} for your donation.`);
-
-    // Example: Redirect to donation page or send data to backend
-    let donationLink = `https://yourpaymentgateway.com/donate?studentId=${studentId}`;
-    window.location.href = donationLink;
-
-    // Alternative: Send donation info to backend (POST request)
-    /*
-    fetch("https://your-backend-url.com/api/donate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ studentId: studentId, amount: "50" }) // Example amount
-    })
-    .then(response => response.json())
-    .then(data => console.log("Donation success:", data))
-    .catch(error => console.error("Donation error:", error));
-    */
-}
-
-// Close modal when clicking outside of it
-window.onclick = function(event) {
-    let modal = document.getElementById("donationModal");
-    if (event.target === modal) {
-        closeDonationModal();
-    }
-};
-
-</script>
+    
+  
+    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 A Spartan's Future | Norfolk State University</p>
+        <p>&copy; © 2024 A Spartan's Future | Norfolk State University</p>
+        
     </footer>
+
+    <script>
+        function goToStudentPage(userId) {
+            window.location.href = `view.html?id=${encodeURIComponent(userId)}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const sliderTrack = document.getElementById("sliderTrack");
+            const images = sliderTrack.children;
+            const clonedTrack = sliderTrack.cloneNode(true);
+            sliderTrack.parentNode.appendChild(clonedTrack);
+        });
+        const students = [
+            { name: "Elijah Everett", bio: "CS student passionate about AI.", image: "https://via.placeholder.com/300x200.png?text=Elijah+Everett" },
+            { name: "Jane Smith", bio: "STEM advocate and mentor.", image: "https://via.placeholder.com/300x200.png?text=Jane+Smith" },
+            { name: "John Doe", bio: "Aspiring engineer and problem solver.", image: "https://via.placeholder.com/300x200.png?text=John+Doe" }
+        ];
+
+        let currentIndex = 0;
+
+        function showProfiles() {
+            const container = document.getElementById("profileSlides");
+            container.innerHTML = "";
+            
+            students.forEach((student, index) => {
+                const slide = document.createElement("div");
+                slide.classList.add("profile-slide");
+                if (index === currentIndex) slide.classList.add("active");
+
+                slide.innerHTML = `
+                    <img src="${student.image}" alt="${student.name}">
+                    <div class="profile-info">
+                        <h3>${student.name}</h3>
+                        <p>${student.bio}</p>
+                        <button class="donate-btn" onclick="donate('${student.name}')">Donate</button>
+                    </div>
+                `;
+
+                container.appendChild(slide);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % students.length;
+            showProfiles();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + students.length) % students.length;
+            showProfiles();
+        }
+        document.addEventListener("DOMContentLoaded", showProfiles);
+
+    
+    </script>
 </body>
 </html>

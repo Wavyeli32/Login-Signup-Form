@@ -14,43 +14,129 @@
             display: flex;
             flex-direction: column;
         }
+
         header {
             background-color: black;
             color: white;
             padding: 20px;
             text-align: center;
         }
+
         nav {
             text-align: center;
             padding: 10px;
             background-color: #00c244;
         }
+
         nav a {
             color: white;
             text-decoration: none;
             margin: 0 15px;
             font-size: 16px;
         }
+
         nav a:hover {
             text-decoration: underline;
         }
+
         .content {
-            padding: 20px;
+            padding: 40px 20px;
             max-width: 800px;
             margin: auto;
-            flex: 1; /* Makes content take up available space, pushing footer to the bottom */
+            flex: 1;
+            text-align: center;
         }
+
         .content h2 {
             color: #00c244;
+            margin-bottom: 20px;
         }
+
         .content h3 {
             color: #00c244;
+            margin-top: 30px;
+            margin-bottom: 15px;
         }
+
+        .extra-section {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .extra-section h3 {
+            color: #28B463;
+        }
+
+        .extra-section p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .how-it-works {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            gap: 30px; /* Adjusts spacing between steps */
+        }
+
+        .how-it-works .step {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .how-it-works .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .how-it-works .step h4 {
+            color: #28B463;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: white;
+            background-color: #00c244;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #008f36;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
             background-color: black;
             color: white;
+        }
+
+        /* Ensure buttons stack vertically on smaller screens */
+        @media (max-width: 768px) {
+            .how-it-works {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -59,25 +145,38 @@
         <h1>Mentorship Portal</h1>
         <p>Connecting students and alumni for growth and success</p>
     </header>
+
     <nav>
-        <a href="index.html">Home</a>
+        <a href="home.html">Home</a>
         <a href="about.html">About</a>
     </nav>
+
     <div class="content">
         <h2>Welcome to the Mentorship Portal</h2>
         <p>
             Our mentorship portal provides NSU students with the opportunity to connect with alumni 
             who can offer guidance, share experiences, and open doors to new career opportunities.
         </p>
-        <h3>How It Works</h3>
-        <ul>
-            <li>Sign up as a student or mentor</li>
-            <li>Match with mentors/alumni based on interests and goals</li>
-            <li>Engage in one-on-one mentorship sessions</li>
-        </ul>
-        <a href="signup.html" class="btn btn-mentorship">Get Started</a>
-        <a href="login.html" class="btn btn-mentorship">Login</a>
+
+        <!-- How It Works Section -->
+        <div class="extra-section">
+            <h3>How It Works</h3>
+            <div class="how-it-works">
+                <div class="step">
+                    <h4>Step 1: Donate</h4>
+                    <p>Support our students by donating to our platform through cashapp.</p>
+                </div>
+                <div class="step">
+                    <h4>Step 2: Mentorship</h4>
+                    <p>Our alumni offer guidance and mentorship to students, preparing them for their careers.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="signup.html" class="btn">Get Started</a>
+        <a href="login.html" class="btn">Login</a>
     </div>
+
     <footer>
         <p>&copy; 2024 A Spartan's Future | Norfolk State University</p>
     </footer>

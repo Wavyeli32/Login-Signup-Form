@@ -59,6 +59,15 @@
         button:hover {
             background-color: #45a049;
         }
+
+        .logout-button {
+            background-color: #f44336; /* Red color for logout */
+            margin-top: 1rem;
+        }
+
+        .logout-button:hover {
+            background-color: #e53935;
+        }
     </style>
 </head>
 <body>
@@ -88,60 +97,66 @@
         </ul>
 
         <button onclick="joinSession()">Join Session</button>
+
+        <!-- Logout Button -->
+        <button class="logout-button" onclick="logout()">Logout</button>
     </div>
+
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-    // Simulated student data (Replace with actual API calls if needed)
-    const studentData = {
-        name: "Elijah Everett",
-        mentor: {
-            name: "Alex Mentor",
-            expertise: "Web Development, Career Growth"
-        },
-        sessions: [
-            "Session 1: Tuesday at 3 PM",
-            "Session 2: Thursday at 5 PM"
-        ],
-        goals: [
-            "Improve coding skills",
-            "Prepare for job interviews"
-        ]
-    };
+        // Simulated student data (Replace with actual API calls if needed)
+        const studentData = {
+            name: "eli",
+            mentor: {
+                name: "Alex Mentor",
+                expertise: "Web Development, Career Growth"
+            },
+            sessions: [
+                "Session 1: Tuesday at 3 PM",
+                "Session 2: Thursday at 5 PM"
+            ],
+            goals: [
+                "Improve coding skills",
+                "Prepare for job interviews"
+            ]
+        };
 
-    // Update student name
-    document.getElementById("studentName").textContent = studentData.name;
+        // Update student name
+        document.getElementById("studentName").textContent = studentData.name;
+        document.getElementById("mentorName").textContent = `Name: ${studentData.mentor.name}`;
+        document.getElementById("mentorExpertise").textContent = `Expertise: ${studentData.mentor.expertise}`;
 
-    // Update mentor info
-    document.getElementById("mentorName").textContent = `Name: ${studentData.mentor.name}`;
-    document.getElementById("mentorExpertise").textContent = `Expertise: ${studentData.mentor.expertise}`;
+        // Populate sessions list dynamically
+        const sessionsList = document.getElementById("sessionsList");
+        sessionsList.innerHTML = "";
+        studentData.sessions.forEach(session => {
+            const li = document.createElement("li");
+            li.textContent = session;
+            sessionsList.appendChild(li);
+        });
 
-    // Populate sessions list dynamically
-    const sessionsList = document.getElementById("sessionsList");
-    sessionsList.innerHTML = "";
-    studentData.sessions.forEach(session => {
-        const li = document.createElement("li");
-        li.textContent = session;
-        sessionsList.appendChild(li);
+        // Populate goals list dynamically
+        const goalsList = document.getElementById("goalsList");
+        goalsList.innerHTML = "";
+        studentData.goals.forEach(goal => {
+            const li = document.createElement("li");
+            li.textContent = goal;
+            goalsList.appendChild(li);
+        });
     });
 
-    // Populate goals list dynamically
-    const goalsList = document.getElementById("goalsList");
-    goalsList.innerHTML = "";
-    studentData.goals.forEach(goal => {
-        const li = document.createElement("li");
-        li.textContent = goal;
-        goalsList.appendChild(li);
-    });
-});
+    // Function to handle joining a session
+    function joinSession() {
+        alert("Redirecting to your mentorship session...");
+        window.location.href = "https://zoom.us/join"; 
+    }
 
-// Function to handle joining a session
-function joinSession() {
-    alert("Redirecting to your mentorship session...");
-    window.location.href = "https://example.com/mentorship-session"; // Replace with actual session link
-}
-
-</script>
-
+    // Function to handle logout
+    function logout() {
+        alert("You have logged out successfully.");
+        // Redirect to the login page (replace with your actual login page URL)
+        window.location.href = "login.html"; // Change "login.html" to your actual login page
+    }
+    </script>
 </body>
 </html>
-
