@@ -17,7 +17,7 @@
         }
 
         header {
-            background-color: black;
+            background-color: #54585A;
             color: white;
             padding: 20px;
             text-align: center;
@@ -87,23 +87,23 @@
         }
 
         .slider-track {
-    display: flex;
-    width: calc(300px * 12);
-    animation: slide 20s linear infinite;
-}
+            display: flex;
+            width: calc(300px * 12);
+            animation: slide 20s linear infinite;
+        }
 
-@keyframes slide {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
 
         .slider-track img {
-            width: 300px;
-            height: 200px;
+            width: 50px;
+            height: 25px;
             object-fit: cover;
             margin: 0 15px;
             border-radius: 8px;
@@ -114,15 +114,6 @@
 
         .slider-track img:hover {
             transform: scale(1.05);
-        }
-
-        @keyframes slide {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
         }
 
         footer {
@@ -221,7 +212,7 @@
         }
 
         .profile-slide img {
-            width: 100%;
+            width: 50%;
             border-radius: 8px;
         }
 
@@ -271,10 +262,17 @@
     </header>
 
     <nav>
-        <a href="home.html">Home</a>
+        <a href="login.html">Login</a>
         <a href="about.html">About</a>
     </nav>
-
+    
+    <div class="content">
+    <h2>Welcome to A Spartan's Future</h2>
+    <p>
+        This initiative is designed to empower NSU students with secure fundraising opportunities 
+        while fostering connections with alumni through mentorship and gamified career fairs.
+    </p>
+</div>
     <h2>Swipe Through Student Profiles</h2>
 
     <div class="profile-container">
@@ -285,80 +283,82 @@
         </div>
     </div>
 
-
     <div class="content">
-        <h2>Welcome to A Spartan's Future</h2>
-        <p>
-            This initiative is designed to empower NSU students with secure fundraising opportunities 
-            while fostering connections with alumni through mentorship and gamified career fairs.
-        </p>
+       
         
         <!-- Call-to-Action Buttons -->
         <div class="btn btn-donate" onclick="window.location.href='donate.html';">Donate</div>
         <a href="mentorship.html" class="btn btn-mentorship">Mentorship Portal</a>
     </div>
 
-    
-  
     <!-- Footer Section -->
     <footer>
-        <p>&copy; © 2024 A Spartan's Future | Norfolk State University</p>
-        
+        <p>&copy; 2024 A Spartan's Future | Norfolk State University</p>
     </footer>
 
     <script>
-        function goToStudentPage(userId) {
-            window.location.href = `view.html?id=${encodeURIComponent(userId)}`;
-        }
+ function goToStudentPage(userId) {
+    window.location.href = `view.html?id=${encodeURIComponent(userId)}`;
+}
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const sliderTrack = document.getElementById("sliderTrack");
-            const images = sliderTrack.children;
-            const clonedTrack = sliderTrack.cloneNode(true);
-            sliderTrack.parentNode.appendChild(clonedTrack);
-        });
-        const students = [
-            { name: "Elijah Everett", bio: "CS student passionate about AI.", image: "https://via.placeholder.com/300x200.png?text=Elijah+Everett" },
-            { name: "Jane Smith", bio: "STEM advocate and mentor.", image: "https://via.placeholder.com/300x200.png?text=Jane+Smith" },
-            { name: "John Doe", bio: "Aspiring engineer and problem solver.", image: "https://via.placeholder.com/300x200.png?text=John+Doe" }
-        ];
+document.addEventListener("DOMContentLoaded", () => {
+    // Fixed: Added the sliderTrack div to the HTML
+    const sliderTrack = document.createElement("div");
+    sliderTrack.id = "sliderTrack";  // Add this missing element
+    document.body.appendChild(sliderTrack);  // Append to body (or a specific container)
 
-        let currentIndex = 0;
+    fetchStudents();
+});
 
-        function showProfiles() {
-            const container = document.getElementById("profileSlides");
-            container.innerHTML = "";
-            
-            students.forEach((student, index) => {
-                const slide = document.createElement("div");
-                slide.classList.add("profile-slide");
-                if (index === currentIndex) slide.classList.add("active");
+let currentIndex = 0;
+let students = [];
 
-                slide.innerHTML = `
-                    <img src="${student.image}" alt="${student.name}">
-                    <div class="profile-info">
-                        <h3>${student.name}</h3>
-                        <p>${student.bio}</p>
-                        <button class="donate-btn" onclick="donate('${student.name}')">Donate</button>
-                    </div>
-                `;
+function fetchStudents() {
+    fetch("/students")
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched Students Data:", data); // Debugging: Check if interests exists
+            students = data;
+            showProfiles(); // Populate profiles once data is fetched
+        })
+        .catch(error => console.error("Error fetching students:", error));
+}
 
-                container.appendChild(slide);
-            });
-        }
+function showProfiles() {
+    const container = document.getElementById("profileSlides");
+    container.innerHTML = "";
 
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % students.length;
-            showProfiles();
-        }
+    students.forEach((student, index) => {
+        const slide = document.createElement("div");
+        slide.classList.add("profile-slide");
+        if (index === currentIndex) slide.classList.add("active");
 
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + students.length) % students.length;
-            showProfiles();
-        }
-        document.addEventListener("DOMContentLoaded", showProfiles);
+        // Ensure fields like name, bio, profileImage are used
+        slide.innerHTML = `
+       <img src="${student.profileImage || 'https://th.bing.com/th/id/OIP.f4YH-DmLWdmahYV5bp36vwHaHX?w=195&h=194&c=7&r=0&o=5&pid=1.7'}" alt="${student.name}">
+            <div class="profile-info">
+                <h3>${student.name}</h3>
+                <p>${student.interests || 'No interest avliable'}</p>
+            </div>
+        `;
+        container.appendChild(slide);
+    });
+}
 
-    
+function nextSlide() {
+    if (currentIndex < students.length - 1) {
+        currentIndex++;
+        showProfiles();
+    }
+}
+
+function prevSlide() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showProfiles();
+    }
+}
+
     </script>
 </body>
 </html>

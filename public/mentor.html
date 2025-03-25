@@ -70,11 +70,26 @@
         .student-list button:hover {
             background-color: #1976D2;
         }
+
+        .logout-button {
+            background-color: #f44336;
+            color: white;
+            margin-top: 1rem;
+            display: block;
+            width: 100%;
+            padding: 0.7rem;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .logout-button:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Mentor Dashboard</h1>
+        <h1>Alumni Dashboard</h1>
     </header>
 
     <div class="container">
@@ -98,6 +113,9 @@
                 <li>Loading...</li>
             </ul>
         </div>
+
+        <!-- Logout Button -->
+        <button class="logout-button" onclick="logout()">Logout</button>
     </div>
 
     <script>
@@ -106,39 +124,67 @@
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById("mentorName").textContent = data.mentorName;
-
+    
+                    // Populate mentor tasks
                     const taskList = document.getElementById("taskList");
                     taskList.innerHTML = "";
                     data.tasks.forEach(task => {
                         taskList.innerHTML += `<li>${task} <button onclick="completeTask(this)">Complete</button></li>`;
                     });
-
+    
+                    // Populate students assigned to the mentor
                     const studentList = document.getElementById("studentList");
                     studentList.innerHTML = "";
                     data.students.forEach(student => {
                         studentList.innerHTML += `<li>${student.name} - Goal: ${student.goal}</li>`;
                     });
-
+    
+                    // Populate new student requests
                     const newStudents = document.getElementById("newStudents");
                     newStudents.innerHTML = "";
                     data.newStudentRequests.forEach(student => {
-                        newStudents.innerHTML += `<li>${student.name} - Goal: ${student.goal} <button onclick="addStudent('${student.name}')">Add</button></li>`;
+                        newStudents.innerHTML += `<li>${student.name} - Goal: ${student.goal} 
+                        <button onclick="addStudent('${student._id}')">Add</button></li>`;
                     });
                 })
                 .catch(error => console.error("Error fetching data:", error));
         });
-
+    
+        // Function to mark a task as completed
         function completeTask(button) {
             button.parentElement.remove();
             alert("Task completed!");
         }
-
+    
+        // Function to start a mentorship session
         function startSession() {
             alert("Starting mentorship session...");
         }
+    
+        // Function to add a student to the mentor's list
+        function addStudent(studentId) {
+            fetch("/mentor/select-student", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ studentId }),
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                location.reload(); // Reload to reflect the updated student list
+            })
+            .catch(error => console.error("Error adding student:", error));
+        }
 
-        function addStudent(name) {
-            alert(`${name} added to your students.`);
+        // Logout function
+        function logout() {
+            // Clear session or authentication-related data if needed
+            // Example: sessionStorage.clear(); or localStorage.clear();
+
+            // Redirect to login page
+            window.location.href = "login.html"; // Adjust the URL if needed
         }
     </script>
 </body>

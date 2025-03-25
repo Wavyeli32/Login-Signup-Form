@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const { LogInCollection} = require("./mongo"); 
+const mongoose = require("mongoose");
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -10,17 +11,49 @@ app.use(express.urlencoded({ extended: false }));
 // Define the public folder for static assets
 const publicPath = path.join(__dirname, "../public");
 app.use(express.static(publicPath));
+const publicImagesPath = path.join(__dirname, "../public/images");
+app.use('/images', express.static(publicImagesPath));
 
 
 
-// API to fetch students from MongoDB
+
 app.get("/students", async (req, res) => {
     try {
-        const studentList = await LogInCollection.find({});
+        const studentList = await LogInCollection.find({ role: "student" }).select('name interests profileImage');
         res.json(studentList);
     } catch (error) {
-        console.error(" Error fetching students:", error);
+        console.error("Error fetching students:", error);
         res.status(500).json({ message: "An error occurred while fetching students." });
+    }
+});
+
+app.post("/mentor/select-student", async (req, res) => {
+    try {
+        const { studentId } = req.body;
+        const mentor = await LogInCollection.findOne({ role: "mentor" });
+
+        if (!mentor) {
+            return res.status(404).json({ message: "Mentor not found." });
+        }
+
+        // Find student and update mentor field
+        const student = await LogInCollection.findById(studentId);
+        if (!student) {
+            return res.status(404).json({ message: "Student not found." });
+        }
+
+        // Assign student to the mentor
+        student.mentor = mentor._id;
+        await student.save();
+
+        // Add student to mentor's list
+        mentor.students.push(student._id);
+        await mentor.save();
+
+        res.json({ message: "Student added successfully!" });
+    } catch (error) {
+        console.error("Error selecting student:", error);
+        res.status(500).json({ message: "An error occurred." });
     }
 });
 
@@ -72,7 +105,13 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid username or password.' });
         }
 
-        return res.status(200).json({ message: 'Login successful', username: user.username, role: user.role });
+        // Assuming `user.name` holds the student's full name
+        return res.status(200).json({
+            message: 'Login successful',
+            username: user.username,
+            role: user.role,
+            studentName: user.name // Send the student's name here
+        });
     } catch (error) {
         console.error('❌ Login error:', error);
         res.status(500).json({ message: 'An internal server error occurred.' });
@@ -80,7 +119,6 @@ app.post('/login', async (req, res) => {
 });
 
 
-// Student Dashboard API
 app.get("/dashboard/:username", async (req, res) => {
     const { username } = req.params;
     try {
@@ -89,20 +127,27 @@ app.get("/dashboard/:username", async (req, res) => {
             return res.status(404).json({ message: "Student not found" });
         }
 
+        const mentor = await LogInCollection.findById(student.mentor);  // Fetch mentor from the database
+        if (!mentor) {
+            return res.status(404).json({ message: "Mentor not found" });
+        }
+
         const dashboardData = {
             studentName: student.name,
-            mentor: { name: "Alex Mentor", expertise: "Web Development, Career Growth" },
+            mentor: {
+                name: mentor.name,
+                expertise: mentor.expertise || "Not available" // Assuming mentor has expertise field
+            },
             upcomingSessions: ["Tuesday at 3 PM", "Thursday at 5 PM"],
-            goals: ["Improve coding skills", "Prepare for job interviews"],
+            goals: student.goals || ["Set your goals here"]
         };
 
         res.json(dashboardData);
     } catch (error) {
-        console.error(" Error fetching student dashboard:", error);
+        console.error("Error fetching student dashboard:", error);
         res.status(500).json({ message: "An internal server error occurred." });
     }
 });
-
 app.get("/mentor-dashboard", async (req, res) => {
     try {
         const mentor = await LogInCollection.findOne({ role: "mentor" });
@@ -125,12 +170,32 @@ app.get("/mentor-dashboard", async (req, res) => {
     }
 });
 
+app.get('/students/:id', async (req, res) => {
+    try {
+        const student = await LogInCollection.findById(req.params.id).lean(); // Fetch student
+
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        // Find a mentor (if any exists)
+        const mentor = await LogInCollection.findOne({ role: "mentor" }).lean(); // Change criteria if needed
+        student.mentor = mentor || null; // Attach mentor to student
+
+        res.json(student);
+    } catch (error) {
+        console.error("Error fetching student:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
 
 
-// Signup API
+
+
 app.post('/signup', async (req, res) => {
     try {
         const { role, name, username, email, password, interests } = req.body;
+
         if (!role || !name || !username || !email || !password) {
             return res.status(400).json({ message: 'All fields are required.' });
         }
@@ -141,8 +206,17 @@ app.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'Username or email is already registered.' });
         }
 
-        // Save new user
-        const newUser = new LogInCollection({ role, name, username, email, password, interests });
+        // Save new user with the profileImage field set to null
+        const newUser = new LogInCollection({
+            role,
+            name,
+            username,
+            email,
+            password,
+            interests,
+            profileImage: "" // Adding profileImage as null initially
+        });
+
         await newUser.save();
 
         return res.status(201).json({ message: 'User signed up successfully!' });
@@ -152,6 +226,37 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+app.get("/students/:studentId/mentor", async (req, res) => {
+    try {
+        const studentId = req.params.studentId;
+        
+        // Check if studentId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+            return res.status(400).json({ error: "Invalid studentId format" });
+        }
+
+        // Fetch the student with the given ObjectId
+        const student = await LogInCollection.findById(studentId).populate('mentor');
+        
+        if (!student) {
+            return res.status(404).json({ error: "Student not found" });
+        }
+        
+        const mentor = student.mentor; // Assuming student has a 'mentor' field
+        
+        if (!mentor) {
+            return res.status(404).json({ error: "Mentor not found" });
+        }
+
+        res.json({
+            mentorName: mentor.name,
+            mentorExpertise: mentor.expertise,
+        });
+    } catch (error) {
+        console.error("Error fetching mentor:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // MongoDB Atlas connection string
-mongoose.connect("mongodb+srv://wavyeli32:github@cluster0.j00mf.mongodb.net/LoginFormPractice?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://mrclutch9000:anointing@cluster0.ooo7a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
